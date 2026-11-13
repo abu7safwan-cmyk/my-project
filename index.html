@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#122746">
+  <meta name="description" content="واصل WASIL — سوقك الإلكتروني من عدن إلى كل اليمن. تسوق من متاجر محلية واطلب بسهولة عبر واتساب.">
+  <title>واصل WASIL | سوقك في مكان واحد</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="topline">واصل يقرّب لك السوق — انطلاقتنا من عدن، اليمن</div>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="واصل الصفحة الرئيسية">
+      <span class="brand-mark">و</span>
+      <span><b>واصل</b><small>WASIL MARKET</small></span>
+    </a>
+    <form class="search" id="searchForm">
+      <span aria-hidden="true">⌕</span>
+      <input id="searchInput" type="search" placeholder="ابحث عن منتج، متجر أو قسم..." aria-label="ابحث">
+      <button type="submit">بحث</button>
+    </form>
+    <nav class="header-actions">
+      <a href="#stores">المتاجر</a>
+      <a href="#how">كيف تطلب؟</a>
+      <button class="cart-button" id="cartButton" type="button">السلة <span id="cartCount">0</span></button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow"><i></i> سوق محلي • عدن، اليمن</span>
+        <h1>كل احتياجاتك<br><em>في مكان واحد.</em></h1>
+        <p>اكتشف منتجات متاجر عدن، قارن الخيارات، واطلب مباشرة من المتجر عبر واتساب بكل سهولة.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#products">تسوق الآن <span>←</span></a>
+          <a class="btn btn-ghost" href="#stores">اكتشف المتاجر</a>
+        </div>
+        <div class="hero-notes"><span>✓ متاجر محلية</span><span>✓ تواصل مباشر</span><span>✓ طلب سهل</span></div>
+      </div>
+      <div class="hero-visual">
+        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1100&q=85" alt="متجر أزياء ومنتجات">
+        <div class="floating-card"><span class="float-icon">✦</span><div><b>تسوّق من عدن</b><small>متاجر ومنتجات متنوعة</small></div></div>
+        <div class="hero-stamp">WASIL<br><small>LOCAL MARKET</small></div>
+      </div>
+    </section>
+
+    <section class="trust-strip" aria-label="مميزات واصل">
+      <div><span>01</span><b>تسوق من متاجر محلية</b><small>اكتشف خيارات من حولك</small></div>
+      <div><span>02</span><b>تواصل مباشر</b><small>اطلب من التاجر عبر واتساب</small></div>
+      <div><span>03</span><b>من عدن إلى اليمن</b><small>نبدأ محلياً ونتوسع تدريجياً</small></div>
+    </section>
+
+    <section class="section" id="categories">
+      <div class="section-heading"><div><span class="eyebrow">تسوّق حسب اختيارك</span><h2>الأقسام الرئيسية</h2></div><p>كل قسم يفتح لك عالماً من المنتجات.</p></div>
+      <div class="category-grid" id="categoryGrid">
+        <button class="category-card active" data-category="الكل"><span class="category-icon">✦</span><b>كل الأقسام</b><small>اكتشف كل المنتجات</small></button>
+        <button class="category-card" data-category="الأزياء النسائية"><span class="category-icon">✿</span><b>أزياء نسائية</b><small>أناقة لكل يوم</small></button>
+        <button class="category-card" data-category="الأزياء الرجالية"><span class="category-icon">◇</span><b>أزياء رجالية</b><small>ستايلك يبدأ هنا</small></button>
+        <button class="category-card" data-category="العطور"><span class="category-icon">♧</span><b>العطور والبخور</b><small>روائح تترك أثراً</small></button>
+        <button class="category-card" data-category="الإلكترونيات"><span class="category-icon">▣</span><b>إلكترونيات</b><small>تقنية وحياة أسهل</small></button>
+        <button class="category-card" data-category="التجميل"><span class="category-icon">❀</span><b>التجميل والعناية</b><small>اختياراتك اليومية</small></button>
+        <button class="category-card" data-category="المنزل"><span class="category-icon">⌂</span><b>المنزل والمطبخ</b><small>تفاصيل تكمّل بيتك</small></button>
+        <button class="category-card" data-category="الأغذية"><span class="category-icon">✳</span><b>الأغذية</b><small>احتياجات البيت</small></button>
+      </div>
+    </section>
+
+    <section class="section products-section" id="products">
+      <div class="section-heading"><div><span class="eyebrow">اختيارات واصل</span><h2>منتجات مختارة</h2></div><div class="product-tools"><span id="resultCount">منتجات تجريبية</span><select id="sortSelect" aria-label="ترتيب المنتجات"><option value="default">الترتيب الافتراضي</option><option value="low">السعر: الأقل أولاً</option><option value="high">السعر: الأعلى أولاً</option></select></div></div>
+      <div class="product-grid" id="productGrid"></div>
+      <p class="demo-note">المنتجات والصور والأسعار المعروضة تجريبية لأغراض تجهيز المنصة، ويجب استبدالها ببيانات المتاجر الحقيقية قبل الإطلاق التجاري.</p>
+    </section>
+
+    <section class="seller-banner">
+      <div><span class="eyebrow light">لأصحاب المحلات والتجار</span><h2>عندك متجر؟<br>خلّ منتجاتك توصل لعملاء أكثر.</h2><p>انضم إلى واصل واعرض منتجاتك أمام زبائن يبحثون عن خيارات محلية.</p><a class="btn btn-white" id="sellerWhatsapp" href="#">تواصل للانضمام عبر واتساب <span>←</span></a></div>
+      <div class="seller-art"><span>W</span><small>YOUR STORE<br>ON WASIL</small></div>
+    </section>
+
+    <section class="section" id="stores">
+      <div class="section-heading"><div><span class="eyebrow">تعرّف عليهم</span><h2>متاجر على واصل</h2></div><p>نماذج تجريبية لشكل ظهور المتاجر.</p></div>
+      <div class="store-grid">
+        <article class="store-card"><div class="store-avatar rose">أ</div><div><b>متجر الأناقة</b><small>أزياء وملابس • عدن</small></div><span class="store-tag">متجر تجريبي</span></article>
+        <article class="store-card"><div class="store-avatar gold">ع</div><div><b>عبق للعطور</b><small>عطور وبخور • عدن</small></div><span class="store-tag">متجر تجريبي</span></article>
+        <article class="store-card"><div class="store-avatar blue">ت</div><div><b>تقنية بلس</b><small>إلكترونيات • عدن</small></div><span class="store-tag">متجر تجريبي</span></article>
+      </div>
+    </section>
+
+    <section class="how-section" id="how">
+      <div class="section-heading"><div><span class="eyebrow">بكل بساطة</span><h2>كيف تطلب من واصل؟</h2></div></div>
+      <div class="steps"><div><span>1</span><b>اختر المنتج</b><small>تصفح الأقسام والمنتجات.</small></div><div><span>2</span><b>أضفه للسلة</b><small>حدد الكمية والمنتجات التي تريدها.</small></div><div><span>3</span><b>أرسل طلبك</b><small>جهّز رسالة الطلب وافتح واتساب.</small></div><div><span>4</span><b>أكد مع المتجر</b><small>اتفق مع التاجر على التوفر والتوصيل.</small></div></div>
+      <p class="demo-note">في هذه النسخة، السلة تعمل داخل المتصفح فقط ولا تحفظ الطلبات في قاعدة بيانات.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <a class="brand footer-brand" href="#"><span class="brand-mark">و</span><span><b>واصل</b><small>WASIL MARKET</small></span></a>
+    <p>سوقك المحلي يبدأ من عدن.</p>
+    <div><a href="#categories">الأقسام</a><a href="#stores">المتاجر</a><a href="#how">طريقة الطلب</a></div>
+    <small>© <span id="year"></span> WASIL. جميع الحقوق محفوظة.</small>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+    <aside class="drawer-panel">
+      <div class="drawer-head"><div><span class="eyebrow">قائمتك</span><h3>سلة واصل</h3></div><button id="closeCart" aria-label="إغلاق">×</button></div>
+      <div id="cartItems" class="cart-items"><p class="empty-cart">سلتك فارغة حالياً.</p></div>
+      <div class="drawer-bottom"><div class="total-line"><span>الإجمالي التقريبي</span><b id="cartTotal">0 ر.ي</b></div><button class="btn btn-primary full" id="checkoutButton">إكمال الطلب عبر واتساب</button><small>سيتم إرسال الطلب إلى رقم واصل الذي تضيفه في إعدادات الموقع.</small></div>
+    </aside>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#122746"><title>WASIL ADMIN | لوحة المؤسس</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<aside class="sidebar">
+  <a class="brand" href="index.html"><span class="mark">و</span><span><b>واصل</b><small>WASIL ADMIN</small></span></a>
+  <div class="profile"><div class="avatar">م</div><div><b>المهندس عبادي الوحيشي</b><small>مؤسس ومشرف المنصة</small></div></div>
+  <nav id="nav">
+    <button class="active" data-page="home">▦ <span>نظرة عامة</span></button>
+    <button data-page="products">▣ <span>المنتجات</span></button>
+    <button data-page="stores">⌂ <span>المتاجر</span></button>
+    <button data-page="merchants">♙ <span>التجار وطلبات الانضمام</span></button>
+    <button data-page="orders">▤ <span>الطلبات</span></button>
+    <button data-page="delivery">➜ <span>التوصيل والمندوبون</span></button>
+    <button data-page="finance">ر.ي <span>العمولات والمستحقات</span></button>
+    <button data-page="reports">▥ <span>التقارير</span></button>
+    <button data-page="settings">⚙ <span>إعدادات المنصة</span></button>
+  </nav>
+  <a class="back" href="index.html">← العودة إلى المتجر</a>
+</aside>
+<main class="main">
+<header class="topbar"><div><small>مركز قيادة منصة واصل</small><h1 id="pageTitle">نظرة عامة</h1></div><span class="demo-pill">وضع تجريبي محلي</span></header>
+<section id="home" class="page">
+  <div class="welcome"><div><span>مرحباً بك في مركز القيادة</span><h2>المهندس عبادي الوحيشي</h2><p>تابع أداء واصل وإدارة عمليات المنصة من مكان واحد.</p></div><div class="welcome-mark">WASIL</div></div>
+  <div class="stats">
+    <article><small>المنتجات المسجلة</small><strong id="statProducts">0</strong></article>
+    <article><small>المتاجر</small><strong id="statStores">0</strong></article>
+    <article><small>طلبات الانضمام المعلقة</small><strong id="statApplications">0</strong></article>
+    <article><small>الطلبات التجريبية</small><strong id="statOrders">0</strong></article>
+  </div>
+  <div class="grid-two"><div class="panel"><h3>مركز المتابعة</h3><p>هذه اللوحة نموذج أولي محلي. الأرقام تعتمد على البيانات المسجلة في هذا المتصفح فقط.</p><ul class="checks"><li>إدارة المنتجات والمتاجر</li><li>تسجيل طلبات التجار ومراجعتها</li><li>تحديد عمولة عامة وعمولة خاصة لكل تاجر</li><li>تخطيط التوصيل المختلط</li></ul></div><div class="panel"><h3>تنبيهات مهمة</h3><p class="notice">لا تستخدم هذه النسخة لحفظ بيانات عملاء حقيقية أو لإدارة أموال فعلية.</p><p>تحتاج صلاحيات المستخدمين والطلبات والمدفوعات إلى Backend وقاعدة بيانات قبل التشغيل التجاري.</p></div></div>
+</section>
+<section id="products" class="page hidden">
+  <div class="page-intro"><h2>إدارة المنتجات</h2><p>إضافة المنتجات مع رفع الصور من جهازك. البيانات محلية على هذا المتصفح.</p></div>
+  <form id="productForm" class="form-card">
+    <label>اسم المنتج<input id="productName" required maxlength="100"></label>
+    <label>السعر بالريال اليمني<input id="productPrice" type="number" min="1" required></label>
+    <label>القسم<select id="productCategory"><option>الإلكترونيات</option><option>الأزياء النسائية</option><option>الأزياء الرجالية</option><option>العطور</option><option>التجميل</option><option>المنزل</option><option>الأغذية</option><option>أخرى</option></select></label>
+    <label>المتجر<input id="productStore" value="متجر واصل" required></label>
+    <label>شارة المنتج<input id="productBadge" placeholder="جديد، عرض خاص..."></label>
+    <label class="file-label">صورة المنتج من جهازك<input id="productImage" type="file" accept="image/*"><small>اختر صورة JPG أو PNG أو WebP. الصورة تحفظ محلياً في المتصفح.</small></label>
+    <div class="preview-wrap"><img id="imagePreview" alt="معاينة الصورة" hidden></div>
+    <button class="primary" type="submit">إضافة المنتج</button>
+  </form>
+  <div class="panel"><h3>المنتجات المضافة</h3><div class="table-wrap"><table><thead><tr><th>الصورة</th><th>المنتج</th><th>المتجر</th><th>القسم</th><th>السعر</th><th>إجراء</th></tr></thead><tbody id="productsTable"></tbody></table></div></div>
+</section>
+<section id="stores" class="page hidden">
+  <div class="page-intro"><h2>إدارة المتاجر</h2><p>تسجيل المتاجر ومتابعة حالتها.</p></div>
+  <form id="storeForm" class="form-card compact"><label>اسم المتجر<input id="storeName" required></label><label>اسم المسؤول<input id="storeOwner"></label><label>رقم التواصل<input id="storePhone" inputmode="tel"></label><label>حالة المتجر<select id="storeStatus"><option value="نشط">نشط</option><option value="بانتظار الموافقة">بانتظار الموافقة</option><option value="موقوف">موقوف</option></select></label><button class="primary">إضافة متجر</button></form>
+  <div class="panel"><h3>المتاجر المسجلة</h3><div class="table-wrap"><table><thead><tr><th>المتجر</th><th>المسؤول</th><th>التواصل</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody id="storesTable"></tbody></table></div></div>
+</section>
+<section id="merchants" class="page hidden">
+  <div class="page-intro"><h2>التجار وطلبات الانضمام</h2><p>التسجيل الذاتي بموافقة المؤسس، مع إمكانية إنشاء حساب تاجر من لوحة المؤسس.</p></div>
+  <form id="applicationForm" class="form-card compact"><h3>تسجيل طلب انضمام تجريبي</h3><label>اسم التاجر<input id="appName" required></label><label>اسم المتجر<input id="appStore" required></label><label>رقم التواصل<input id="appPhone"></label><button class="primary">إضافة طلب للمراجعة</button></form>
+  <div class="panel"><h3>طلبات الانضمام</h3><div class="table-wrap"><table><thead><tr><th>التاجر</th><th>المتجر</th><th>التواصل</th><th>الحالة</th><th>الإجراء</th></tr></thead><tbody id="applicationsTable"></tbody></table></div></div>
+  <form id="merchantForm" class="form-card compact"><h3>إنشاء تاجر بواسطة المؤسس</h3><label>اسم التاجر<input id="merchantName" required></label><label>اسم المتجر<input id="merchantStore" required></label><label>رقم التواصل<input id="merchantPhone"></label><label>العمولة الخاصة %<input id="merchantRate" type="number" min="0" max="100" step="0.1" placeholder="اتركه فارغاً لاستخدام النسبة العامة"></label><button class="primary">إنشاء سجل تاجر تجريبي</button></form>
+  <div class="panel"><h3>التجار المعتمدون</h3><div class="table-wrap"><table><thead><tr><th>التاجر</th><th>المتجر</th><th>التواصل</th><th>العمولة</th><th>الحالة</th></tr></thead><tbody id="merchantsTable"></tbody></table></div></div>
+</section>
+<section id="orders" class="page hidden">
+  <div class="page-intro"><h2>إدارة الطلبات</h2><p>عرض الطلبات التجريبية وتحديث حالتها لأغراض اختبار الواجهة.</p></div>
+  <form id="orderForm" class="form-card compact"><label>رقم الطلب<input id="orderId" placeholder="W-1001" required></label><label>اسم المتجر<input id="orderStore" required></label><label>قيمة المنتجات<input id="orderTotal" type="number" min="0" required></label><label>الحالة<select id="orderStatus"><option>طلب جديد</option><option>بانتظار موافقة التاجر</option><option>تم قبول الطلب</option><option>قيد التجهيز</option><option>جاهز للاستلام</option><option>مع المندوب</option><option>في الطريق</option><option>تم التسليم</option><option>ملغي</option><option>مرتجع</option></select></label><button class="primary">إضافة طلب تجريبي</button></form>
+  <div class="panel"><h3>سجل الطلبات</h3><div class="table-wrap"><table><thead><tr><th>رقم الطلب</th><th>المتجر</th><th>قيمة المنتجات</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody id="ordersTable"></tbody></table></div></div>
+</section>
+<section id="delivery" class="page hidden">
+  <div class="page-intro"><h2>التوصيل والمندوبون</h2><p>النظام المختلط المعتمد: مندوبو واصل ومندوبو التجار.</p></div>
+  <div class="grid-two"><div class="panel"><h3>سياسة التوصيل</h3><p>يمكن للمتجر استخدام مندوبيه أو طلب مندوب من واصل. المؤسس يستطيع التدخل في الإسناد عند الحاجة.</p><label>طريقة التوصيل الافتراضية<select id="deliveryDefault"><option value="hybrid">مختلط حسب المتجر</option><option value="wasil">مندوبو واصل</option><option value="merchant">مندوبو التاجر</option></select></label><label>رسوم توصيل افتراضية (ر.ي)<input id="deliveryFee" type="number" min="0"></label><button class="primary" id="saveDelivery">حفظ إعدادات التوصيل</button></div><div class="panel"><h3>قواعد تشغيلية</h3><ul class="checks"><li>لا يُسند الطلب قبل جاهزيته للاستلام.</li><li>مندوب التاجر يرى مهام متجره فقط.</li><li>مندوب واصل يرى المهام المسندة إليه فقط.</li><li>رسوم التوصيل منفصلة عن عمولة المنتجات.</li></ul></div></div>
+  <form id="driverForm" class="form-card compact"><h3>إضافة مندوب تجريبي</h3><label>اسم المندوب<input id="driverName" required></label><label>رقم التواصل<input id="driverPhone"></label><label>تابع إلى<select id="driverType"><option value="واصل">واصل</option><option value="التاجر">التاجر</option></select></label><label>المتجر (لمندوب التاجر)<input id="driverStore"></label><button class="primary">إضافة مندوب</button></form>
+  <div class="panel"><h3>المندوبون</h3><div class="table-wrap"><table><thead><tr><th>المندوب</th><th>التواصل</th><th>الجهة</th><th>المتجر</th><th>إجراء</th></tr></thead><tbody id="driversTable"></tbody></table></div></div>
+</section>
+<section id="finance" class="page hidden">
+  <div class="page-intro"><h2>العمولات والمستحقات</h2><p>عمولة على قيمة المنتجات فقط، ورسوم التوصيل مستقلة. لا تحتسب العمولة على الملغي أو المرتجع بالكامل.</p></div>
+  <div class="panel"><h3>العمولة العامة</h3><div class="inline-form"><label>النسبة العامة %<input id="globalRate" type="number" min="0" max="100" step="0.1"></label><button class="primary" id="saveRate">حفظ النسبة العامة</button></div><p class="muted">يمكن تحديد نسبة مختلفة لكل تاجر من قسم التجار. التاجر لا يغير نسبته بنفسه.</p></div>
+  <div class="panel"><h3>سياسة التحصيل والتسوية</h3><div class="checks"><p>✓ دعم التسوية اليدوية.</p><p>✓ قابلية ربط التحصيل الإلكتروني لاحقاً بمزود دفع معتمد.</p><p>✓ سجل تغييرات للعمولات والتسويات مطلوب في النسخة الخلفية.</p></div><label>طريقة التسوية الافتراضية<select id="settlementMode"><option>يدوية وإلكترونية عند توفر الربط</option><option>يدوية</option><option>إلكترونية بعد الربط</option></select></label><button class="primary" id="saveSettlement">حفظ طريقة التسوية</button></div>
+</section>
+<section id="reports" class="page hidden">
+  <div class="page-intro"><h2>التقارير والإحصائيات</h2><p>تصور التقارير اليومية والأسبوعية والشهرية والسنوية. القيم الفعلية تتطلب ربط قاعدة البيانات.</p></div>
+  <div class="report-tabs"><button class="active" data-period="يومية">يومية</button><button data-period="أسبوعية">أسبوعية</button><button data-period="شهرية">شهرية</button><button data-period="سنوية">سنوية</button></div>
+  <div class="stats"><article><small>عدد المنتجات</small><strong id="reportProducts">0</strong></article><article><small>عدد المتاجر</small><strong id="reportStores">0</strong></article><article><small>طلبات مسجلة محلياً</small><strong id="reportOrders">0</strong></article><article><small>العمولة العامة</small><strong id="reportRate">0%</strong></article></div>
+  <p class="notice">هذه مؤشرات إدارية محلية وليست تقارير مبيعات حقيقية. لم يتم احتساب إيرادات أو أرباح غير موجودة في البيانات.</p>
+  <button class="secondary" id="exportReport">تصدير ملخص CSV يفتح في Excel</button>
+</section>
+<section id="settings" class="page hidden">
+  <div class="page-intro"><h2>إعدادات المنصة</h2><p>إعدادات عامة للنسخة التجريبية.</p></div>
+  <div class="panel"><h3>معلومات واصل</h3><label>اسم المنصة<input value="واصل WASIL" disabled></label><label>مدينة الانطلاقة<input value="عدن – اليمن" disabled></label><label>رقم واتساب التجاري<input id="whatsappSetting" placeholder="967XXXXXXXX"></label><button class="primary" id="saveWhatsapp">حفظ رقم واتساب على هذا المتصفح</button><p class="muted">لا تضع بيانات سرية في هذه النسخة. لا توجد صلاحية دخول حقيقية حتى بناء الخادم.</p></div>
+  <div class="panel"><h3>إدارة البيانات التجريبية</h3><button class="danger" id="clearDemo">حذف بيانات لوحة الإدارة من هذا المتصفح</button></div>
+</section>
+<footer>WASIL ADMIN · نموذج أولي محلي · ليس نظاماً إنتاجياً</footer>
+</main>
+<div id="toast" class="toast"></div>
+<script src="admin.js"></script>
+</body></html>

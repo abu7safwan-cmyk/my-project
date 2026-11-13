@@ -1,0 +1,45 @@
+const K={p:'wasil_admin_products',s:'wasil_admin_stores',o:'wasil_demo_orders',a:'wasil_merchant_applications',m:'wasil_merchants',d:'wasil_drivers',cfg:'wasil_admin_settings'};
+const $=id=>document.getElementById(id);
+const get=k=>{try{const v=JSON.parse(localStorage.getItem(k)||'[]');return Array.isArray(v)?v:[]}catch{return []}};
+const put=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const getCfg=()=>{try{return JSON.parse(localStorage.getItem(K.cfg)||'{}')}catch{return {}}};
+const setCfg=v=>localStorage.setItem(K.cfg,JSON.stringify(v));
+const safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>Number(n||0).toLocaleString('en-US')+' ر.ي';
+function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),2300)}
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('hidden',p.id!==id));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===id));$('pageTitle').textContent=document.querySelector(`[data-page="${id}"] span`).textContent}
+$('nav').addEventListener('click',e=>{const b=e.target.closest('[data-page]');if(b)showPage(b.dataset.page)});
+function render(){
+ const p=get(K.p),s=get(K.s),o=get(K.o),a=get(K.a),m=get(K.m),d=get(K.d),cfg=getCfg();
+ $('statProducts').textContent=p.length;$('statStores').textContent=s.length;$('statApplications').textContent=a.filter(x=>x.status==='بانتظار المراجعة').length;$('statOrders').textContent=o.length;
+ $('productsTable').innerHTML=p.map((x,i)=>`<tr><td>${x.image?`<img src="${x.image}" alt="">`:'—'}</td><td>${safe(x.name)}</td><td>${safe(x.store)}</td><td>${safe(x.category)}</td><td>${money(x.price)}</td><td><button class="action delete" data-delete-product="${i}">حذف</button></td></tr>`).join('')||empty(6);
+ $('storesTable').innerHTML=s.map((x,i)=>`<tr><td>${safe(x.name)}</td><td>${safe(x.owner||'—')}</td><td>${safe(x.phone||'—')}</td><td>${safe(x.status||'نشط')}</td><td><button class="action delete" data-delete-store="${i}">حذف</button></td></tr>`).join('')||empty(5);
+ $('applicationsTable').innerHTML=a.map((x,i)=>`<tr><td>${safe(x.name)}</td><td>${safe(x.store)}</td><td>${safe(x.phone||'—')}</td><td>${safe(x.status)}</td><td>${x.status==='بانتظار المراجعة'?`<button class="action approve" data-approve="${i}">موافقة</button><button class="action reject" data-reject="${i}">رفض</button>`:'—'}</td></tr>`).join('')||empty(5);
+ $('merchantsTable').innerHTML=m.map(x=>`<tr><td>${safe(x.name)}</td><td>${safe(x.store)}</td><td>${safe(x.phone||'—')}</td><td>${x.rate===''||x.rate==null?'النسبة العامة':safe(x.rate)+'%'}</td><td>${safe(x.status||'نشط')}</td></tr>`).join('')||empty(5);
+ $('ordersTable').innerHTML=o.map((x,i)=>`<tr><td>${safe(x.id)}</td><td>${safe(x.store)}</td><td>${money(x.total)}</td><td><select data-order-status="${i}">${['طلب جديد','بانتظار موافقة التاجر','تم قبول الطلب','قيد التجهيز','جاهز للاستلام','مع المندوب','في الطريق','تم التسليم','ملغي','مرتجع'].map(st=>`<option ${x.status===st?'selected':''}>${st}</option>`).join('')}</select></td><td><button class="action delete" data-delete-order="${i}">حذف</button></td></tr>`).join('')||empty(5);
+ $('driversTable').innerHTML=d.map((x,i)=>`<tr><td>${safe(x.name)}</td><td>${safe(x.phone||'—')}</td><td>${safe(x.type)}</td><td>${safe(x.store||'—')}</td><td><button class="action delete" data-delete-driver="${i}">حذف</button></td></tr>`).join('')||empty(5);
+ $('reportProducts').textContent=p.length;$('reportStores').textContent=s.length;$('reportOrders').textContent=o.length;$('reportRate').textContent=(cfg.globalRate??5)+'%';
+ $('globalRate').value=cfg.globalRate??5;$('deliveryDefault').value=cfg.deliveryDefault||'hybrid';$('deliveryFee').value=cfg.deliveryFee??0;$('settlementMode').value=cfg.settlementMode||'يدوية وإلكترونية عند توفر الربط';$('whatsappSetting').value=cfg.whatsapp||'';
+}
+function empty(n){return `<tr><td colspan="${n}" class="muted">لا توجد بيانات حالياً.</td></tr>`}
+$('productImage').addEventListener('change',e=>{const f=e.target.files[0];if(!f){$('imagePreview').hidden=true;return}if(!f.type.startsWith('image/')){toast('اختر ملف صورة صالحاً');e.target.value='';return}if(f.size>1500000){toast('حجم الصورة كبير. اختر صورة أقل من 1.5 ميجابايت');e.target.value='';return}const r=new FileReader();r.onload=()=>{$('imagePreview').src=r.result;$('imagePreview').hidden=false};r.readAsDataURL(f)});
+$('productForm').onsubmit=e=>{e.preventDefault();const f=$('productImage').files[0];const save=image=>{const arr=get(K.p);arr.push({id:Date.now(),name:$('productName').value.trim(),price:Number($('productPrice').value),category:$('productCategory').value,store:$('productStore').value.trim(),badge:$('productBadge').value.trim(),image:image||''});put(K.p,arr);e.target.reset();$('imagePreview').hidden=true;render();toast('تمت إضافة المنتج محلياً')};if(f){const r=new FileReader();r.onload=()=>save(r.result);r.readAsDataURL(f)}else save('')};
+$('storeForm').onsubmit=e=>{e.preventDefault();const a=get(K.s);a.push({name:$('storeName').value.trim(),owner:$('storeOwner').value.trim(),phone:$('storePhone').value.trim(),status:$('storeStatus').value});put(K.s,a);e.target.reset();render();toast('تم تسجيل المتجر')};
+$('applicationForm').onsubmit=e=>{e.preventDefault();const a=get(K.a);a.push({name:$('appName').value.trim(),store:$('appStore').value.trim(),phone:$('appPhone').value.trim(),status:'بانتظار المراجعة'});put(K.a,a);e.target.reset();render();toast('تم تسجيل طلب الانضمام للمراجعة')};
+$('merchantForm').onsubmit=e=>{e.preventDefault();const a=get(K.m);a.push({name:$('merchantName').value.trim(),store:$('merchantStore').value.trim(),phone:$('merchantPhone').value.trim(),rate:$('merchantRate').value,status:'نشط'});put(K.m,a);e.target.reset();render();toast('تم إنشاء سجل التاجر التجريبي')};
+$('orderForm').onsubmit=e=>{e.preventDefault();const a=get(K.o);a.push({id:$('orderId').value.trim(),store:$('orderStore').value.trim(),total:Number($('orderTotal').value),status:$('orderStatus').value});put(K.o,a);e.target.reset();render();toast('تم تسجيل الطلب التجريبي')};
+$('driverForm').onsubmit=e=>{e.preventDefault();const a=get(K.d);a.push({name:$('driverName').value.trim(),phone:$('driverPhone').value.trim(),type:$('driverType').value,store:$('driverStore').value.trim()});put(K.d,a);e.target.reset();render();toast('تمت إضافة المندوب التجريبي')};
+document.addEventListener('click',e=>{const t=e.target;
+ for(const [attr,key] of [['delete-product',K.p],['delete-store',K.s],['delete-order',K.o],['delete-driver',K.d]])if(t.dataset[attr]!==undefined){const a=get(key);a.splice(Number(t.dataset[attr]),1);put(key,a);render();return}
+ if(t.dataset.approve!==undefined){const a=get(K.a),x=a[+t.dataset.approve];x.status='مقبول';const m=get(K.m);m.push({name:x.name,store:x.store,phone:x.phone,status:'نشط',rate:''});put(K.m,m);put(K.a,a);const s=get(K.s);s.push({name:x.store,owner:x.name,phone:x.phone,status:'نشط'});put(K.s,s);render();toast('تمت الموافقة وإضافة سجل المتجر والتاجر')}
+ if(t.dataset.reject!==undefined){const a=get(K.a);a[+t.dataset.reject].status='مرفوض';put(K.a,a);render();toast('تم رفض الطلب')}
+ if(t.dataset.period!==undefined){document.querySelectorAll('[data-period]').forEach(b=>b.classList.toggle('active',b===t));toast('عرض '+t.dataset.period+' — البيانات الفعلية تتطلب قاعدة بيانات')}
+});
+document.addEventListener('change',e=>{if(e.target.dataset.orderStatus!==undefined){const a=get(K.o);a[+e.target.dataset.orderStatus].status=e.target.value;put(K.o,a);render();toast('تم تحديث حالة الطلب التجريبي')}});
+$('saveRate').onclick=()=>{const c=getCfg();c.globalRate=Number($('globalRate').value);setCfg(c);render();toast('تم حفظ العمولة العامة محلياً')};
+$('saveDelivery').onclick=()=>{const c=getCfg();c.deliveryDefault=$('deliveryDefault').value;c.deliveryFee=Number($('deliveryFee').value);setCfg(c);toast('تم حفظ إعدادات التوصيل')};
+$('saveSettlement').onclick=()=>{const c=getCfg();c.settlementMode=$('settlementMode').value;setCfg(c);toast('تم حفظ طريقة التسوية')};
+$('saveWhatsapp').onclick=()=>{const c=getCfg();c.whatsapp=$('whatsappSetting').value.trim();setCfg(c);toast('تم حفظ الرقم في إعدادات هذا المتصفح')};
+$('clearDemo').onclick=()=>{if(!confirm('هل تريد حذف جميع بيانات لوحة الإدارة التجريبية من هذا المتصفح؟'))return;Object.values(K).forEach(k=>localStorage.removeItem(k));render();toast('تم حذف البيانات التجريبية')};
+$('exportReport').onclick=()=>{const p=get(K.p),s=get(K.s),o=get(K.o),c=getCfg();const rows=[['البند','القيمة'],['المنتجات',p.length],['المتاجر',s.length],['الطلبات المسجلة',o.length],['العمولة العامة %',c.globalRate??5]];const csv='\uFEFF'+rows.map(r=>r.join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='WASIL-report-demo.csv';a.click();URL.revokeObjectURL(a.href)};
+render();
